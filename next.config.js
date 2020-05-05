@@ -1,31 +1,5 @@
 const withStyles = require('@webdeb/next-styles');
-const {I18NextHMRPlugin} = require('i18next-hmr/plugin');
-
-module.exports = {
-    webpack: (config, {dev, isServer}) => {
-        if (dev) {
-            config.module.rules.push({
-                enforce: 'pre',
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-                options: {
-                    // eslint options (if necessary)
-                },
-            });
-
-            if (!isServer) {
-                config.module.plugins.push(
-                    new I18NextHMRPlugin({
-                        localesDir: path.resolve(__dirname, 'public/static/locales'),
-                    })
-                );
-            }
-        }
-
-        return config;
-    },
-};
+const path = require('path');
 
 // SASS
 module.exports = withStyles({
@@ -44,4 +18,30 @@ module.exports = withStyles({
     //     filename: isDevMode() ? '[name].css' : '[name].[hash].css',
     //     chunkFilename: isDevMode() ? '[id].css' : '[id].[hash].css',
     // },
+
+    webpack: (config, {dev, isServer}) => {
+        if (dev) {
+            // config.module.rules.push({
+            //     enforce: 'pre',
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     loader: 'eslint-loader',
+            //     options: {
+            //         // eslint options (if necessary)
+            //     },
+            // });
+
+            if (!isServer) {
+                const {I18NextHMRPlugin} = require('i18next-hmr/plugin');
+                config.plugins.push(
+                    new I18NextHMRPlugin({
+                        localesDir: path.resolve(__dirname, 'public/static/locales'),
+                    })
+                );
+            }
+        }
+
+        return config;
+    },
+
 });
