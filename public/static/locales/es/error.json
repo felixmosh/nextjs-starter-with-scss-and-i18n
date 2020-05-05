@@ -1,0 +1,4 @@
+{
+    "errorWithStatus": "Un error {{statusCode}} ocurrió en el servidor.",
+    "errorWithoutStatus": "Un error ha ocurrido en el servidor."
+}
